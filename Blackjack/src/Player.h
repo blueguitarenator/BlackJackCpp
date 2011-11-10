@@ -28,6 +28,7 @@ public:
 	int GetBank(){return m_bank;}
 	int GetBet(){return m_bet;}
 	void Wins();
+	void Push();
 	int GetValue();
 private:
 	std::vector<Card*> m_cards;

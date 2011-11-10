@@ -21,6 +21,11 @@ Player::Player(IStrategy& s)
 Player::~Player() {
 }
 
+void Player::Push()
+{
+	m_bank += m_bet;
+}
+
 void Player::Wins()
 {
 	m_bank += m_bet * 2;

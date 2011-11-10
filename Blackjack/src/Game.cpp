@@ -61,9 +61,17 @@ void Game::Settle()
 		{
 			m_p1.Wins();
 		}
-		else if (p2Val < 22 && p2Val > dealerVal)
+		else if (p1Val == dealerVal)
+		{
+			m_p1.Push();
+		}
+		if (p2Val < 22 && p2Val > dealerVal)
 		{
 			m_p2.Wins();
+		}
+		else if (p2Val == dealerVal)
+		{
+			m_p2.Push();
 		}
 	}
 }
