@@ -8,28 +8,31 @@
 #ifndef DEALER_H_
 #define DEALER_H_
 
+#include "IDealer.h"
 #include <vector>
 class IDeck;
 class Card;
-class Table;
+class ITable;
 class IPlayer;
 
-class Dealer {
+class Dealer : public IDealer {
 public:
-	Dealer(IDeck& d, Table& t);
+	Dealer(IDeck& d, ITable& t);
 	virtual ~Dealer();
 
 	void Deal();
-	int Count();
-	void DoHits(IPlayer* p);
+	void DealHits(IPlayer* p);
 	int FinishUp();
 	int GetValue();
 
 	friend class DealerTestFriend;
 private:
-	Table& m_table;
+	ITable& m_table;
 	IDeck& m_deck;
 	std::vector<Card*> m_cards;
+
+	int Count();
+
 };
 
 #endif /* DEALER_H_ */

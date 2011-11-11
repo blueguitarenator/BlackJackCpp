@@ -6,14 +6,28 @@
  */
 
 /*
- * export DYLD_LIBRARY_PATH=/Users/richardjohnson/code/cpp/workspace/Blackjack/Debug
+ * export DYLD_LIBRARY_PATH=/Users/richardjohnson/code/cpp/BlackjackCode/Blackjack/Debug
  */
 
 #include "Game.h"
+#include "Player.h"
+#include "Deck.h"
+#include "Table.h"
+#include "Dealer.h"
+#include "strategy/BasicStrategy.h"
+#include "strategy/ActionHelper.h"
 
 int main()
 {
-	Game game;
-	game.Play();
+	ActionHelper helper;
+	BasicStrategy strategy(helper);
+	Player p1(strategy);
+	Player p2(strategy);
+	Deck deck;
+	Table table(p1, p2);
+	Dealer dealer(deck, table);
+
+	Game game(table, dealer);
+	game.Play(1);
 	return 0;
 }

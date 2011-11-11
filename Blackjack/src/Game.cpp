@@ -6,41 +6,41 @@
  */
 
 #include "Game.h"
+#include "ITable.h"
+#include "IDealer.h"
+#include "IPlayer.h"
+
 using namespace std;
 
-Game::Game()
-: m_strategy(m_helper),
-  m_p1(m_strategy),
-  m_p2(m_strategy),
-  m_table(m_p1, m_p2),
-  m_dealer(m_deck, m_table)
+Game::Game(ITable& table, IDealer& dealer)
+: m_table(table),
+  m_dealer(dealer)
 {
-	m_deck.Shuffle();
-
+//	m_deck.Shuffle();
 }
 
 Game::~Game() {
 }
 
-void Game::Play()
+void Game::Play(int rounds)
 {
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < rounds; ++i)
 	{
 		cout << "++++++++ROUND++++++++++: " << i << endl;
 		m_table.Reset();
 		m_dealer.Deal();
-		PrintTable(m_table);
+		PrintTable();
 //		IStrategy::Action a1 = m_p1.Decision(m_table.GetDealerCard());
 //		IStrategy::Action a2 = m_p2.Decision(m_table.GetDealerCard());
 //		PrintDecisions(a1, a2);
-		m_dealer.DoHits(&m_p1);
-		m_dealer.DoHits(&m_p2);
+		m_dealer.DealHits(m_table.P1());
+		m_dealer.DealHits(m_table.P2());
 		cout << "After Hits" << endl;
-		PrintTable(m_table);
+		PrintTable();
 		cout << "Dealer Value: (" << m_dealer.FinishUp() << ")" << endl;
 		Settle();
-		cout << "P1 Bank $" << m_p1.GetBank() << endl;
-		cout << "P2 Bank $" << m_p2.GetBank() << endl;
+		cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
+		cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
 	}
 
 }
@@ -48,30 +48,30 @@ void Game::Play()
 void Game::Settle()
 {
 	int dealerVal = m_dealer.GetValue();
-	int p1Val = m_p1.GetValue();
-	int p2Val = m_p2.GetValue();
+	int p1Val = m_table.P1()->GetValue();
+	int p2Val = m_table.P2()->GetValue();
 	if (dealerVal > 21)
 	{
-		m_p1.Wins();
-		m_p2.Wins();
+		m_table.P1()->Wins();
+		m_table.P2()->Wins();
 	}
 	else
 	{
 		if (p1Val < 22 && p1Val > dealerVal)
 		{
-			m_p1.Wins();
+			m_table.P1()->Wins();
 		}
 		else if (p1Val == dealerVal)
 		{
-			m_p1.Push();
+			m_table.P1()->Push();
 		}
 		if (p2Val < 22 && p2Val > dealerVal)
 		{
-			m_p2.Wins();
+			m_table.P2()->Wins();
 		}
 		else if (p2Val == dealerVal)
 		{
-			m_p2.Push();
+			m_table.P2()->Push();
 		}
 	}
 }
@@ -82,15 +82,15 @@ void Game::PrintDecisions(IStrategy::Action a1, IStrategy::Action a2)
 	cout << "P2 action: " << a2 << " " << GetActionString(a2) << endl;
 }
 
-void Game::PrintTable(Table& t)
+void Game::PrintTable()
 {
-	cout << "P1(" << m_p1.GetValue() << ") :";
-	t.P1()->ShowCards();
-	cout << " Wage: " << t.GetP1Wager() << endl;
-	cout << "P2(" << m_p2.GetValue() << ") :";
-	t.P2()->ShowCards();
-	cout << " Wage: " << t.GetP2Wager() << endl;
-	cout << "UpCard: " << t.GetDealerCard()->Value() << "-" << t.GetDealerCard()->SuitString() << endl;
+	cout << "P1(" << m_table.P1()->GetValue() << ") :";
+	m_table.P1()->ShowCards();
+	cout << " Wage: " << m_table.GetP1Wager() << endl;
+	cout << "P2(" << m_table.P2()->GetValue() << ") :";
+	m_table.P2()->ShowCards();
+	cout << " Wage: " << m_table.GetP2Wager() << endl;
+	cout << "UpCard: " << m_table.GetDealerCard()->Value() << "-" << m_table.GetDealerCard()->SuitString() << endl;
 }
 
 string Game::GetActionString(IStrategy::Action a)

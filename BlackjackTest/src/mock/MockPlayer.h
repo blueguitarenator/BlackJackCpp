@@ -22,5 +22,8 @@ public:
   MOCK_METHOD1(Decision, IStrategy::Action(Card* dealerFace));
   MOCK_METHOD0(Split, IPlayer*());
   MOCK_METHOD0(Wins, void());
+  MOCK_METHOD0(Push, void());
+  MOCK_METHOD0(GetBank, int());
+  MOCK_METHOD0(GetValue, int());
 };
 #endif /* MOCKPLAYER_H_ */

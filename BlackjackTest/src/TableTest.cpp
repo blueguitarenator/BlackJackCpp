@@ -8,10 +8,10 @@
 
 #include <gtest/gtest.h>
 //#include "gmock/gmock.h"
-#include "Dealer.h"
 #include "Table.h"
 #include "mock/MockPlayer.h"
 #include "mock/MockDeck.h"
+#include "mock/MockDealer.h"
 
 class TableFixture : public ::testing::Test {
 public:
@@ -19,7 +19,7 @@ public:
 	MockPlayer p2;
 	MockDeck deck;
 	Table* t;
-	Dealer* d;
+	MockDealer dealer;
 
 	TableFixture( ) {
        // initialization code here
@@ -28,14 +28,14 @@ public:
    void SetUp( ) {
        // code here will execute just before the test ensues
 		t = new Table(p1, p2);
-		d = new Dealer(deck, *t);
+//		d = new Dealer(deck, *t);
    }
 
    void TearDown( ) {
        // code here will be called just after the test completes
        // ok to through exceptions from here if need be
 	   delete t;
-	   delete d;
+//	   delete d;
    }
 
    ~TableFixture( )  {

@@ -22,6 +22,9 @@ public:
 	virtual IPlayer* Split() = 0;
 	virtual void ShowCards(){};
 	virtual void Wins() = 0;
+	virtual void Push() = 0;
+	virtual int GetBank() = 0;
+	virtual int GetValue() = 0;
 
 
 };

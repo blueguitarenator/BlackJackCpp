@@ -6,23 +6,23 @@
  */
 
 #include "Dealer.h"
-#include "Table.h"
+#include "ITable.h"
 #include "IDeck.h"
 #include "IPlayer.h"
 #include <iostream>
 #include "Card.h"
 
-Dealer::Dealer(IDeck& deck, Table& t)
+Dealer::Dealer(IDeck& deck, ITable& t)
 :m_table(t),
  m_deck(deck)
 {
-
+	m_deck.Shuffle();
 }
 
 Dealer::~Dealer() {
 }
 
-void Dealer::DoHits(IPlayer* p)
+void Dealer::DealHits(IPlayer* p)
 {
 	Card* dealerCard = m_table.GetDealerCard();
 
@@ -45,8 +45,8 @@ void Dealer::DoHits(IPlayer* p)
 		IPlayer* splitPlayer = p->Split();
 		splitPlayer->TakeCard(m_deck.Next());
 		p->TakeCard(m_deck.Next());
-		DoHits(splitPlayer);
-		DoHits(p);
+		DealHits(splitPlayer);
+		DealHits(p);
 	}
 }
 

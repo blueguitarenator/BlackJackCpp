@@ -9,10 +9,12 @@
 #ifndef TABLE_H_
 #define TABLE_H_
 
+#include "ITable.h"
+
 class Card;
 class IPlayer;
 
-class Table {
+class Table : public ITable {
 public:
 	Table(IPlayer& p1, IPlayer& p2);
 	~Table();

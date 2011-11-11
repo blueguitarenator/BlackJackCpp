@@ -7,6 +7,7 @@
 #include "Table.h"
 #include "IPlayer.h"
 #include <iostream>
+#include "Card.h"
 
 Table::Table(IPlayer& p1, IPlayer& p2)
 :m_p1(p1),
