@@ -28,13 +28,15 @@ TEST(GameFixture, OneRoundDealerBusts)
 	using ::testing::Return;
 	using ::testing::AnyNumber;
 	using ::testing::_;
+	std::vector<IPlayer*> splits;
 	EXPECT_CALL(mock_table, Reset()).Times(1);
 	EXPECT_CALL(mock_dealer, Deal()).Times(1);
 	EXPECT_CALL(mock_dealer, DealHits(_)).Times(2);
 	EXPECT_CALL(mock_dealer, GetValue())
-		.Times(1)
-		.WillOnce(Return(22));
+		.Times(2)
+		.WillRepeatedly(Return(22));
 	EXPECT_CALL(mock_player, Wins()).Times(2);
+	ON_CALL(mock_player, GetSplits()).WillByDefault(Return(&splits));
 	ON_CALL(mock_player, GetValue()).WillByDefault(Return(10));
 	ON_CALL(mock_player, GetValue()).WillByDefault(Return(10));
 	EXPECT_CALL(mock_table, P1()).Times(AnyNumber()).WillRepeatedly(Return(&mock_player));

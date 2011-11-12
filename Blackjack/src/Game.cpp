@@ -16,7 +16,6 @@ Game::Game(ITable& table, IDealer& dealer)
 : m_table(table),
   m_dealer(dealer)
 {
-//	m_deck.Shuffle();
 }
 
 Game::~Game() {
@@ -54,35 +53,49 @@ void Game::Play(int rounds)
 
 }
 
-void Game::Settle()
+void Game::DoSettle(IPlayer* p)
 {
 	int dealerVal = m_dealer.GetValue();
-	int p1Val = m_table.P1()->GetValue();
-	int p2Val = m_table.P2()->GetValue();
+	int pVal = p->GetValue();
 	if (dealerVal > 21)
 	{
-		m_table.P1()->Wins();
-		m_table.P2()->Wins();
+		p->Wins();
 	}
 	else
 	{
-		if (p1Val < 22 && p1Val > dealerVal)
+		if (pVal < 22 && pVal > dealerVal)
 		{
-			m_table.P1()->Wins();
+			p->Wins();
 		}
-		else if (p1Val == dealerVal)
+		else if (pVal == dealerVal)
 		{
-			m_table.P1()->Push();
-		}
-		if (p2Val < 22 && p2Val > dealerVal)
-		{
-			m_table.P2()->Wins();
-		}
-		else if (p2Val == dealerVal)
-		{
-			m_table.P2()->Push();
+			p->Push();
 		}
 	}
+}
+
+void Game::Settle()
+{
+	IPlayer* p1 = m_table.P1();
+	IPlayer* p2 = m_table.P2();
+	std::vector<IPlayer*>::iterator iter;
+	DoSettle(p1);
+	std::vector<IPlayer*>* splits = p1->GetSplits();
+	for (iter = splits->begin(); iter != splits->end(); ++iter)
+	{
+		IPlayer* split = *iter;
+		DoSettle(split);
+	}
+	p1->TakeSplitsBank();
+
+	DoSettle(p2);
+	splits = p2->GetSplits();
+	for (iter = splits->begin(); iter != splits->end(); ++iter)
+	{
+		IPlayer* split = *iter;
+		DoSettle(split);
+	}
+	p1->TakeSplitsBank();
 }
 
 void Game::PrintDecisions(IStrategy::Action a1, IStrategy::Action a2)
@@ -95,10 +108,8 @@ void Game::PrintTable()
 {
 	cout << "P1(" << m_table.P1()->GetValue() << ") :";
 	m_table.P1()->ShowCards();
-	cout << " Wage: " << m_table.GetP1Wager() << endl;
 	cout << "P2(" << m_table.P2()->GetValue() << ") :";
 	m_table.P2()->ShowCards();
-	cout << " Wage: " << m_table.GetP2Wager() << endl;
 	cout << "UpCard: " << m_table.GetDealerCard()->Value() << "-" << m_table.GetDealerCard()->SuitString() << endl;
 }
 

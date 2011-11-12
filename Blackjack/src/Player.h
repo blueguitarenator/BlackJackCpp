@@ -31,10 +31,12 @@ public:
 	void Push();
 	void Blackjack();
 	int GetValue();
+	std::vector<IPlayer*>* GetSplits();
+	int TakeSplitsBank();
 private:
 	std::vector<Card*> m_cards;
 	IStrategy& m_strategy;
-	IPlayer* m_pSplit;
+	std::vector<IPlayer*> m_splits;
 	int m_bank;
 	int m_bet;
 };

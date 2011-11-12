@@ -11,8 +11,7 @@
 
 Player::Player(IStrategy& s)
 : m_strategy(s),
-  m_pSplit(NULL),
-  m_bank(100),
+  m_bank(0),
   m_bet(0)
 {
 
@@ -37,10 +36,21 @@ void Player::Wins()
 	m_bank += m_bet * 2;
 }
 
-// PAY BLACKJACK @ 1.5!!!!!
+int Player::TakeSplitsBank()
+{
+	using namespace std;
+	vector<IPlayer*>::iterator iter;
+	for (iter = m_splits.begin(); iter != m_splits.end(); ++iter)
+	{
+		IPlayer* split = *iter;
+		m_bank += split->GetBank();
+	}
+	return 0;
+}
 
 int Player::Ante()
 {
+	m_splits.clear();
 	m_cards.clear();
 	m_bank -= 10;
 	m_bet = 10;
@@ -82,9 +92,14 @@ void Player::ShowCards()
 
 IPlayer* Player::Split()
 {
-	m_pSplit = new Player(m_strategy);
+	IPlayer* split = new Player(m_strategy);
+	m_splits.push_back(split);
+	return split;
+}
 
-	return m_pSplit;
+std::vector<IPlayer*>* Player::GetSplits()
+{
+	return &m_splits;
 }
 
 int Player::GetValue()

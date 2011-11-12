@@ -26,5 +26,7 @@ public:
   MOCK_METHOD0(Blackjack, void());
   MOCK_METHOD0(GetBank, int());
   MOCK_METHOD0(GetValue, int());
+  MOCK_METHOD0(GetSplits, std::vector<IPlayer*>*());
+  MOCK_METHOD0(TakeSplitsBank, int());
 };
 #endif /* MOCKPLAYER_H_ */

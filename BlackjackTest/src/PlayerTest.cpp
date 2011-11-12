@@ -48,15 +48,15 @@ TEST(PlayerTest, PlayerBankUpdatesDouble)
 	MockStrategy s;
 	Player p(s);
 	EXPECT_CALL(s, Execute(_, _)).Times(1).WillOnce(Return(IStrategy::DOUBLE));
-	EXPECT_EQ(100, p.GetBank());
+	EXPECT_EQ(0, p.GetBank());
 	p.Ante();
-	EXPECT_EQ(90, p.GetBank());
+	EXPECT_EQ(-10, p.GetBank());
 	EXPECT_EQ(10, p.GetBet());
 	p.Decision(new Card(3, Card::HEART));
-	EXPECT_EQ(80, p.GetBank());
+	EXPECT_EQ(-20, p.GetBank());
 	EXPECT_EQ(20, p.GetBet());
 	p.Wins();
-	EXPECT_EQ(120, p.GetBank());
+	EXPECT_EQ(20, p.GetBank());
 }
 
 
@@ -66,12 +66,12 @@ TEST(PlayerTest, PlayerBankUpdatesBlackJack)
 	using ::testing::Return;
 	MockStrategy s;
 	Player p(s);
-	EXPECT_EQ(100, p.GetBank());
+	EXPECT_EQ(0, p.GetBank());
 	p.Ante();
-	EXPECT_EQ(90, p.GetBank());
+	EXPECT_EQ(-10, p.GetBank());
 	EXPECT_EQ(10, p.GetBet());
 	p.Blackjack();
-	EXPECT_EQ(115, p.GetBank());
+	EXPECT_EQ(15, p.GetBank());
 }
 
 TEST(PlayerTest, PlayerBankUpdatesPush)
@@ -80,12 +80,25 @@ TEST(PlayerTest, PlayerBankUpdatesPush)
 	using ::testing::Return;
 	MockStrategy s;
 	Player p(s);
-	EXPECT_EQ(100, p.GetBank());
+	EXPECT_EQ(0, p.GetBank());
 	p.Ante();
-	EXPECT_EQ(90, p.GetBank());
+	EXPECT_EQ(-10, p.GetBank());
 	EXPECT_EQ(10, p.GetBet());
 	p.Push();
-	EXPECT_EQ(100, p.GetBank());
+	EXPECT_EQ(0, p.GetBank());
 }
 
-
+TEST(PlayerTest, PlayerGetsSplitsBet)
+{
+	using ::testing::_;
+	using ::testing::Return;
+	MockStrategy s;
+	Player p(s);
+	p.Ante();
+	IPlayer* split = p.Split();
+	split->Ante();
+	p.Wins();
+	split->Wins();
+	p.TakeSplitsBank();
+	EXPECT_EQ(20, p.GetBank());
+}

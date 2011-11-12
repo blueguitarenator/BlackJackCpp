@@ -158,6 +158,7 @@ TEST_F(DealerFixture, DealerHitsUntilStay)
 	using ::testing::_;
 	using ::testing::Return;
 
+	EXPECT_CALL(table, GetDealerCard());
 	EXPECT_CALL(player, Decision(_))
 		.Times(3)
 		.WillOnce(Return(IStrategy::HIT))
@@ -178,6 +179,7 @@ TEST_F(DealerFixture, DealerAllowsStay)
 	using ::testing::_;
 	using ::testing::Return;
 
+	EXPECT_CALL(table, GetDealerCard());
 	EXPECT_CALL(player, Decision(_))
 		.Times(1)
 		.WillOnce(Return(IStrategy::STAY));
@@ -193,6 +195,7 @@ TEST_F(DealerFixture, DealerWhenPlaySplitsOnce)
 	using ::testing::Return;
 
 	MockPlayer pSplit;
+	EXPECT_CALL(table, GetDealerCard()).Times(3);
 	EXPECT_CALL(deck, Shuffle()).Times(1);
 	EXPECT_CALL(deck, Next())
 		.Times(2)

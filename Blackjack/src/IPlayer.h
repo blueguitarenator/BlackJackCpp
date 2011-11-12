@@ -26,7 +26,8 @@ public:
 	virtual void Blackjack() = 0;
 	virtual int GetBank() = 0;
 	virtual int GetValue() = 0;
-
+	virtual std::vector<IPlayer*>* GetSplits() = 0;
+	virtual int TakeSplitsBank() = 0;
 
 };
 

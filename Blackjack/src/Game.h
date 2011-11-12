@@ -29,6 +29,7 @@ private:
 	void PrintDecisions(IStrategy::Action a1, IStrategy::Action a2);
 	std::string GetActionString(IStrategy::Action a);
 	void Settle();
+	void DoSettle(IPlayer* p);
 
 	ITable& m_table;
 	IDealer& m_dealer;
