@@ -13,10 +13,11 @@ class IPlayer;
 class IDealer
 {
 public:
-	virtual void Deal() = 0;
+	virtual bool Deal() = 0;
 	virtual void DealHits(IPlayer* p) = 0;
 	virtual int FinishUp() = 0;
 	virtual int GetValue() = 0;
+	virtual bool CheckBlackjack() = 0;
 };
 
 #endif /* IDEALER_H_ */

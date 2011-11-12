@@ -65,7 +65,7 @@ TEST_F(DealerFixture, DealsToPlayersAndDealer)
 	EXPECT_CALL(table, P2()).Times(2).WillRepeatedly(Return(&player));
 	EXPECT_CALL(table, SetDealerCard(_));
 	EXPECT_CALL(player, TakeCard(_)).Times(4);
-	EXPECT_CALL(deck, Next()).Times(6);
+	EXPECT_CALL(deck, Next()).Times(6).WillRepeatedly(Return(new Card(5, Card::DIAMOND)));
 	EXPECT_CALL(deck, Shuffle()).Times(1);
 	Dealer dealer(deck, table);
 	dealer.Deal();

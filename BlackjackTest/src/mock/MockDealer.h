@@ -14,10 +14,11 @@
 class MockDealer: public IDealer {
 public:
 
-	  MOCK_METHOD0(Deal, void());
+	  MOCK_METHOD0(Deal, bool());
 	  MOCK_METHOD1(DealHits, void(IPlayer* p));
 	  MOCK_METHOD0(FinishUp, int());
 	  MOCK_METHOD0(GetValue, int());
+	  MOCK_METHOD0(CheckBlackjack, bool());
 };
 
 #endif /* MOCKDEALER_H_ */

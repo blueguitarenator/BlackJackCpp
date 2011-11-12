@@ -26,17 +26,25 @@ void Player::Push()
 	m_bank += m_bet;
 }
 
+void Player::Blackjack()
+{
+	m_bank += m_bet;
+	m_bank += m_bet * 1.5;
+}
+
 void Player::Wins()
 {
 	m_bank += m_bet * 2;
 }
 
+// PAY BLACKJACK @ 1.5!!!!!
+
 int Player::Ante()
 {
 	m_cards.clear();
-	m_bank -= 5;
-	m_bet = 5;
-	return 5;
+	m_bank -= 10;
+	m_bet = 10;
+	return 10;
 }
 
 IStrategy::Action Player::Decision(Card* dealerFace)
@@ -46,8 +54,8 @@ IStrategy::Action Player::Decision(Card* dealerFace)
 	{
 //		using namespace std;
 //		cout << "DOUBLE" << endl;
-		m_bank -= 5;
-		m_bet += 5;
+		m_bank -= 10;
+		m_bet += 10;
 	}
 	return action;
 }

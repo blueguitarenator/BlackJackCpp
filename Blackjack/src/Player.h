@@ -29,6 +29,7 @@ public:
 	int GetBet(){return m_bet;}
 	void Wins();
 	void Push();
+	void Blackjack();
 	int GetValue();
 private:
 	std::vector<Card*> m_cards;

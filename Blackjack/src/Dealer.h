@@ -20,10 +20,11 @@ public:
 	Dealer(IDeck& d, ITable& t);
 	virtual ~Dealer();
 
-	void Deal();
+	bool Deal();
 	void DealHits(IPlayer* p);
 	int FinishUp();
 	int GetValue();
+	bool CheckBlackjack();
 
 	friend class DealerTestFriend;
 private:

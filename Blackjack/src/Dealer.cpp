@@ -50,7 +50,7 @@ void Dealer::DealHits(IPlayer* p)
 	}
 }
 
-void Dealer::Deal()
+bool Dealer::Deal()
 {
 	m_cards.clear();
 	m_table.P1()->TakeCard(m_deck.Next());
@@ -61,6 +61,14 @@ void Dealer::Deal()
 	Card* dealerCard = m_deck.Next();
 	m_cards.push_back(dealerCard);
 	m_table.SetDealerCard(dealerCard);
+	return CheckBlackjack();
+}
+
+bool Dealer::CheckBlackjack()
+{
+	if (GetValue() == 21)
+		return true;
+	return false;
 }
 
 int Dealer::Count()

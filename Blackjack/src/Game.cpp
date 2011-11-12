@@ -28,7 +28,16 @@ void Game::Play(int rounds)
 	{
 		cout << "++++++++ROUND++++++++++: " << i << endl;
 		m_table.Reset();
-		m_dealer.Deal();
+		bool dealerBlackjack = m_dealer.Deal();
+		if (dealerBlackjack)
+		{
+			cout << "==== DEALER BLACKJACK ==== " << endl;
+			PrintTable();
+			cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
+			cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
+
+			continue;
+		}
 		PrintTable();
 //		IStrategy::Action a1 = m_p1.Decision(m_table.GetDealerCard());
 //		IStrategy::Action a2 = m_p2.Decision(m_table.GetDealerCard());

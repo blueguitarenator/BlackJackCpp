@@ -16,8 +16,9 @@
 #include "Dealer.h"
 #include "strategy/BasicStrategy.h"
 #include "strategy/ActionHelper.h"
+#include <cstdlib>
 
-int main()
+int main(int argc, char* argv[])
 {
 	ActionHelper helper;
 	BasicStrategy strategy(helper);
@@ -28,6 +29,14 @@ int main()
 	Dealer dealer(deck, table);
 
 	Game game(table, dealer);
-	game.Play(1);
+	if (argc == 2)
+	{
+		int numberOfPlays = atoi(argv[1]);
+		game.Play(numberOfPlays);
+	}
+	else
+	{
+		game.Play(1);
+	}
 	return 0;
 }
