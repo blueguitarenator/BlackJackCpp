@@ -24,6 +24,10 @@ Dealer::~Dealer() {
 
 void Dealer::DealHits(IPlayer* p)
 {
+	if (p->GetValue() == 0)
+	{
+		return;
+	}
 	Card* dealerCard = m_table.GetDealerCard();
 
 	IStrategy::Action a1 = p->Decision(dealerCard);

@@ -9,13 +9,14 @@
 #define PLAYER_H_
 
 #include <vector>
+#include <string>
 #include "IPlayer.h"
 
 class IStrategy;
 
 class Player : public IPlayer {
 public:
-	Player(IStrategy&);
+	Player(IStrategy&, std::string name);
 	virtual ~Player();
 
 	void TakeCard(Card* c);
@@ -29,11 +30,14 @@ public:
 	int GetBet(){return m_bet;}
 	void Wins();
 	void Push();
-	void Blackjack();
+	bool Blackjack();
 	int GetValue();
 	std::vector<IPlayer*>* GetSplits();
 	int TakeSplitsBank();
+
+	friend class PlayerTestFriend;
 private:
+	std::string m_name;
 	std::vector<Card*> m_cards;
 	IStrategy& m_strategy;
 	std::vector<IPlayer*> m_splits;

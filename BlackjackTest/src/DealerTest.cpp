@@ -139,7 +139,9 @@ TEST_F(DealerFixture, DealerDoubleDownsPlayer)
 {
 	using ::testing::_;
 	using ::testing::Return;
+	using ::testing::AnyNumber;
 
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(17));
 	EXPECT_CALL(table, GetDealerCard());
 	EXPECT_CALL(player, Decision(_))
 		.Times(1)
@@ -157,7 +159,9 @@ TEST_F(DealerFixture, DealerHitsUntilStay)
 {
 	using ::testing::_;
 	using ::testing::Return;
+	using ::testing::AnyNumber;
 
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(17));
 	EXPECT_CALL(table, GetDealerCard());
 	EXPECT_CALL(player, Decision(_))
 		.Times(3)
@@ -178,7 +182,9 @@ TEST_F(DealerFixture, DealerAllowsStay)
 {
 	using ::testing::_;
 	using ::testing::Return;
+	using ::testing::AnyNumber;
 
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(17));
 	EXPECT_CALL(table, GetDealerCard());
 	EXPECT_CALL(player, Decision(_))
 		.Times(1)
@@ -193,8 +199,11 @@ TEST_F(DealerFixture, DealerWhenPlaySplitsOnce)
 {
 	using ::testing::_;
 	using ::testing::Return;
+	using ::testing::AnyNumber;
 
 	MockPlayer pSplit;
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(12));
+	EXPECT_CALL(pSplit, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(12));
 	EXPECT_CALL(table, GetDealerCard()).Times(3);
 	EXPECT_CALL(deck, Shuffle()).Times(1);
 	EXPECT_CALL(deck, Next())

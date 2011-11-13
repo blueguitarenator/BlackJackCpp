@@ -32,17 +32,15 @@ void Game::Play(int rounds)
 		{
 			cout << "==== DEALER BLACKJACK ==== " << endl;
 			PrintTable();
-			cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
-			cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
+//			cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
+//			cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
 
 			continue;
 		}
 		PrintTable();
-//		IStrategy::Action a1 = m_p1.Decision(m_table.GetDealerCard());
-//		IStrategy::Action a2 = m_p2.Decision(m_table.GetDealerCard());
-//		PrintDecisions(a1, a2);
 		m_dealer.DealHits(m_table.P1());
 		m_dealer.DealHits(m_table.P2());
+
 		cout << "After Hits" << endl;
 		PrintTable();
 		cout << "Dealer Value: (" << m_dealer.FinishUp() << ")" << endl;
@@ -98,35 +96,37 @@ void Game::Settle()
 	p1->TakeSplitsBank();
 }
 
-void Game::PrintDecisions(IStrategy::Action a1, IStrategy::Action a2)
-{
-	cout << "P1 action: " << a1 << " " << GetActionString(a1) << endl;
-	cout << "P2 action: " << a2 << " " << GetActionString(a2) << endl;
-}
+//void Game::PrintDecisions(IStrategy::Action a1, IStrategy::Action a2)
+//{
+//	cout << "P1 action: " << a1 << " " << GetActionString(a1) << endl;
+//	cout << "P2 action: " << a2 << " " << GetActionString(a2) << endl;
+//}
 
 void Game::PrintTable()
 {
-	cout << "P1(" << m_table.P1()->GetValue() << ") :";
+//	cout << "P1(" << m_table.P1()->GetValue() << ") :";
 	m_table.P1()->ShowCards();
-	cout << "P2(" << m_table.P2()->GetValue() << ") :";
+	cout << " " << endl;
+//	cout << "P2(" << m_table.P2()->GetValue() << ") :";
 	m_table.P2()->ShowCards();
+	cout << " " << endl;
 	cout << "UpCard: " << m_table.GetDealerCard()->Value() << "-" << m_table.GetDealerCard()->SuitString() << endl;
 }
 
-string Game::GetActionString(IStrategy::Action a)
-{
-	switch(a)
-	{
-	case IStrategy::STAY:
-		return "Stay";
-	case IStrategy::HIT:
-		return "Hit";
-	case IStrategy::SPLIT:
-		return "Split";
-	case IStrategy::DOUBLE:
-		return "Double";
-	case IStrategy::BUST:
-		return "Bust";
-	}
-	return "UNK";
-}
+//string Game::GetActionString(IStrategy::Action a)
+//{
+//	switch(a)
+//	{
+//	case IStrategy::STAY:
+//		return "Stay";
+//	case IStrategy::HIT:
+//		return "Hit";
+//	case IStrategy::SPLIT:
+//		return "Split";
+//	case IStrategy::DOUBLE:
+//		return "Double";
+//	case IStrategy::BUST:
+//		return "Bust";
+//	}
+//	return "UNK";
+//}

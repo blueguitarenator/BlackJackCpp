@@ -7,10 +7,14 @@
 
 #include "Player.h"
 #include <iostream>
+#include <iomanip>
 #include "Card.h"
 
-Player::Player(IStrategy& s)
-: m_strategy(s),
+using namespace std;
+
+Player::Player(IStrategy& s, std::string name)
+: m_name(name),
+  m_strategy(s),
   m_bank(0),
   m_bet(0)
 {
@@ -25,10 +29,17 @@ void Player::Push()
 	m_bank += m_bet;
 }
 
-void Player::Blackjack()
+bool Player::Blackjack()
 {
-	m_bank += m_bet;
-	m_bank += m_bet * 1.5;
+	if (GetValue() == 21)
+	{
+		m_bank += m_bet;
+		m_bank += m_bet * 1.5;
+		m_bet = 0;
+		m_cards.clear();
+		return true;
+	}
+	return false;
 }
 
 void Player::Wins()
@@ -38,7 +49,6 @@ void Player::Wins()
 
 int Player::TakeSplitsBank()
 {
-	using namespace std;
 	vector<IPlayer*>::iterator iter;
 	for (iter = m_splits.begin(); iter != m_splits.end(); ++iter)
 	{
@@ -62,8 +72,6 @@ IStrategy::Action Player::Decision(Card* dealerFace)
 	IStrategy::Action action = m_strategy.Execute(m_cards, dealerFace);
 	if (action == IStrategy::DOUBLE)
 	{
-//		using namespace std;
-//		cout << "DOUBLE" << endl;
 		m_bank -= 10;
 		m_bet += 10;
 	}
@@ -80,20 +88,13 @@ int Player::Count()
 	return m_cards.size();
 }
 
-void Player::ShowCards()
-{
-	using namespace std;
-	vector<Card*>::iterator iter;
-	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
-	{
-		cout << (*iter)->Value() << "-" << (*iter)->SuitString() << " ";
-	}
-}
-
 IPlayer* Player::Split()
 {
-	IPlayer* split = new Player(m_strategy);
+	IPlayer* split = new Player(m_strategy, m_name + " split");
 	m_splits.push_back(split);
+	Card* c = m_cards[1];
+	split->TakeCard(c);
+	m_cards.pop_back();
 	return split;
 }
 
@@ -105,11 +106,31 @@ std::vector<IPlayer*>* Player::GetSplits()
 int Player::GetValue()
 {
 	int val = 0;
-	std::vector<Card*>::const_iterator iter;
+	vector<Card*>::const_iterator iter;
 	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
 	{
 		Card* c = *iter;
 		val += c->Value();
 	}
 	return val;
+}
+
+void Player::ShowCards()
+{
+	cout << m_name << "(" << GetValue() << ")" << setw(10) << "$" << m_bank << setw(10);
+	vector<Card*>::iterator iter;
+	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+	{
+		cout << (*iter)->Value() << "-" << (*iter)->SuitString() << " ";
+	}
+	if (m_splits.size() > 0)
+	{
+		cout << "\n SPLITS " << endl;
+		vector<IPlayer*>::iterator iter;
+		for (iter = m_splits.begin(); iter != m_splits.end(); ++iter)
+		{
+			(*iter)->ShowCards();
+		}
+
+	}
 }

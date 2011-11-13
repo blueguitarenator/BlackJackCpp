@@ -22,8 +22,8 @@ int main(int argc, char* argv[])
 {
 	ActionHelper helper;
 	BasicStrategy strategy(helper);
-	Player p1(strategy);
-	Player p2(strategy);
+	Player p1(strategy, "P1");
+	Player p2(strategy, "P2");
 	Deck deck;
 	Table table(p1, p2);
 	Dealer dealer(deck, table);

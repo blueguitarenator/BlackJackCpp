@@ -24,7 +24,6 @@ public:
 	void DealHits(IPlayer* p);
 	int FinishUp();
 	int GetValue();
-	bool CheckBlackjack();
 
 	friend class DealerTestFriend;
 private:
@@ -32,6 +31,7 @@ private:
 	IDeck& m_deck;
 	std::vector<Card*> m_cards;
 
+	bool CheckBlackjack();
 	int Count();
 
 };

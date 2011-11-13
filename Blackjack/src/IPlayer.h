@@ -23,12 +23,11 @@ public:
 	virtual void ShowCards(){};
 	virtual void Wins() = 0;
 	virtual void Push() = 0;
-	virtual void Blackjack() = 0;
+	virtual bool Blackjack() = 0;
 	virtual int GetBank() = 0;
 	virtual int GetValue() = 0;
 	virtual std::vector<IPlayer*>* GetSplits() = 0;
 	virtual int TakeSplitsBank() = 0;
-
 };
 
 #endif /* IPLAYER_H_ */

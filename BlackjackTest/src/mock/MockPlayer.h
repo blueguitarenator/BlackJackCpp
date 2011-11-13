@@ -23,7 +23,7 @@ public:
   MOCK_METHOD0(Split, IPlayer*());
   MOCK_METHOD0(Wins, void());
   MOCK_METHOD0(Push, void());
-  MOCK_METHOD0(Blackjack, void());
+  MOCK_METHOD0(Blackjack, bool());
   MOCK_METHOD0(GetBank, int());
   MOCK_METHOD0(GetValue, int());
   MOCK_METHOD0(GetSplits, std::vector<IPlayer*>*());

@@ -26,7 +26,7 @@ public:
 
 private:
 	void PrintTable();
-	void PrintDecisions(IStrategy::Action a1, IStrategy::Action a2);
+//	void PrintDecisions(IStrategy::Action a1, IStrategy::Action a2);
 	std::string GetActionString(IStrategy::Action a);
 	void Settle();
 	void DoSettle(IPlayer* p);
