@@ -27,7 +27,8 @@ public:
 	virtual int GetBank() = 0;
 	virtual int GetValue() = 0;
 	virtual std::vector<IPlayer*>* GetSplits() = 0;
-	virtual int TakeSplitsBank() = 0;
+	virtual void TakeSplitsBank() = 0;
+	virtual bool In() = 0;
 };
 
 #endif /* IPLAYER_H_ */

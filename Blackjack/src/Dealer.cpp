@@ -47,8 +47,8 @@ void Dealer::DealHits(IPlayer* p)
 	else if (a1 == IStrategy::SPLIT)
 	{
 		IPlayer* splitPlayer = p->Split();
-		splitPlayer->TakeCard(m_deck.Next());
 		p->TakeCard(m_deck.Next());
+		splitPlayer->TakeCard(m_deck.Next());
 		DealHits(splitPlayer);
 		DealHits(p);
 	}

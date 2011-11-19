@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const int BET = 10;
+
 Player::Player(IStrategy& s, std::string name)
 : m_name(name),
   m_strategy(s),
@@ -33,6 +35,7 @@ bool Player::Blackjack()
 {
 	if (GetValue() == 21)
 	{
+		cout << m_name << " BLACKJACK " << endl;
 		m_bank += m_bet;
 		m_bank += m_bet * 1.5;
 		m_bet = 0;
@@ -42,38 +45,51 @@ bool Player::Blackjack()
 	return false;
 }
 
+bool Player::In()
+{
+	return m_cards.size() > 1;
+}
+
 void Player::Wins()
 {
+	cout << m_name << " WINS " << endl;
 	m_bank += m_bet * 2;
 }
 
-int Player::TakeSplitsBank()
+void Player::TakeSplitsBank()
 {
 	vector<IPlayer*>::iterator iter;
 	for (iter = m_splits.begin(); iter != m_splits.end(); ++iter)
 	{
 		IPlayer* split = *iter;
-		m_bank += split->GetBank();
+		int val = split->GetBank();
+		cout << "Taking splits: " << val << endl;
+		m_bank += val;
 	}
-	return 0;
 }
 
 int Player::Ante()
 {
 	m_splits.clear();
 	m_cards.clear();
-	m_bank -= 10;
-	m_bet = 10;
-	return 10;
+	m_bank -= BET;
+	m_bet = BET;
+	return BET;
 }
 
 IStrategy::Action Player::Decision(Card* dealerFace)
 {
+	if (GetValue() > 21)
+	{
+		cout << m_name << " BUST  " << endl;
+		m_bet = 0;
+	}
 	IStrategy::Action action = m_strategy.Execute(m_cards, dealerFace);
 	if (action == IStrategy::DOUBLE)
 	{
-		m_bank -= 10;
-		m_bet += 10;
+		cout << m_name << " DOUBLE DOWN " << endl;
+		m_bank -= BET;
+		m_bet += BET;
 	}
 	return action;
 }
@@ -93,6 +109,7 @@ IPlayer* Player::Split()
 	IPlayer* split = new Player(m_strategy, m_name + " split");
 	m_splits.push_back(split);
 	Card* c = m_cards[1];
+	split->Ante();
 	split->TakeCard(c);
 	m_cards.pop_back();
 	return split;

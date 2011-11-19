@@ -33,7 +33,8 @@ public:
 	bool Blackjack();
 	int GetValue();
 	std::vector<IPlayer*>* GetSplits();
-	int TakeSplitsBank();
+	void TakeSplitsBank();
+	bool In();
 
 	friend class PlayerTestFriend;
 private:

@@ -11,6 +11,7 @@
 #include "mock/MockTable.h"
 #include "mock/MockPlayer.h"
 #include "mock/MockDeck.h"
+#include "Card.h"
 
 class DealerTestFriend
 {
@@ -32,7 +33,7 @@ public:
 	MockTable table;
 //	Dealer* dealer;
 	DealerTestFriend dealerFriend;
-
+	Card* sixDiamonds;
 	DealerFixture( ) {
        // initialization code here
    }
@@ -41,6 +42,7 @@ public:
        // code here will execute just before the test ensues
 //		table = new Table(p1, p2);
 //		dealer = new Dealer(deck, table);
+	   sixDiamonds  = new Card(6, Card::DIAMOND);
    }
 
    void TearDown( ) {
@@ -202,13 +204,13 @@ TEST_F(DealerFixture, DealerWhenPlaySplitsOnce)
 	using ::testing::AnyNumber;
 
 	MockPlayer pSplit;
-	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(12));
-	EXPECT_CALL(pSplit, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(12));
-	EXPECT_CALL(table, GetDealerCard()).Times(3);
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(1));
+	EXPECT_CALL(pSplit, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(1));
+	EXPECT_CALL(table, GetDealerCard()).Times(AnyNumber());
 	EXPECT_CALL(deck, Shuffle()).Times(1);
 	EXPECT_CALL(deck, Next())
 		.Times(2)
-		.WillRepeatedly(Return(new Card(6, Card::DIAMOND)));
+		.WillRepeatedly(Return(sixDiamonds));
 	EXPECT_CALL(player, Decision(_))
 		.Times(2)
 		.WillOnce(Return(IStrategy::SPLIT))
@@ -221,6 +223,42 @@ TEST_F(DealerFixture, DealerWhenPlaySplitsOnce)
 		.WillOnce(Return(&pSplit));
 	EXPECT_CALL(player, TakeCard(_)).Times(1);
 	EXPECT_CALL(pSplit, TakeCard(_)).Times(1);
+	Dealer dealer(deck, table);
+	dealer.DealHits(&player);
+}
+
+TEST_F(DealerFixture, DealerWhenPlaySplitsTwice)
+{
+	using ::testing::_;
+	using ::testing::Return;
+	using ::testing::AnyNumber;
+
+	MockPlayer pSplit;
+	MockPlayer pSplit2;
+	EXPECT_CALL(player, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(1));
+	EXPECT_CALL(pSplit, GetValue()).Times(AnyNumber()).WillRepeatedly(Return(1));
+	EXPECT_CALL(table, GetDealerCard()).Times(AnyNumber()).WillRepeatedly(Return(sixDiamonds));
+	EXPECT_CALL(deck, Shuffle()).Times(1);
+	EXPECT_CALL(deck, Next())
+		.Times(4)
+		.WillRepeatedly(Return(sixDiamonds));
+	EXPECT_CALL(player, Decision(_))
+		.Times(2)
+		.WillOnce(Return(IStrategy::SPLIT))
+		.WillOnce(Return(IStrategy::STAY));
+	EXPECT_CALL(pSplit, Decision(_))
+		.Times(2)
+		.WillOnce(Return(IStrategy::SPLIT))
+		.WillOnce(Return(IStrategy::STAY));
+	EXPECT_CALL(player, Split())
+		.Times(1)
+		.WillOnce(Return(&pSplit));
+	EXPECT_CALL(pSplit, Split())
+		.Times(1)
+		.WillOnce(Return(&pSplit2));
+	EXPECT_CALL(player, TakeCard(_)).Times(1);
+	EXPECT_CALL(pSplit, TakeCard(_)).Times(2);
+	EXPECT_CALL(pSplit2, TakeCard(_)).Times(1);
 	Dealer dealer(deck, table);
 	dealer.DealHits(&player);
 }

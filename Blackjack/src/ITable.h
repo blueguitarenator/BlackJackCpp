@@ -21,6 +21,7 @@ public:
 	virtual void Reset() = 0;
 	virtual int GetP1Wager() = 0;
 	virtual int GetP2Wager() = 0;
+	virtual void CheckPlayerBlackJacks() = 0;
 };
 
 

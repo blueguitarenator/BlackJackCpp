@@ -28,6 +28,12 @@ IPlayer* Table::P2()
 	return &m_p2;
 }
 
+void Table::CheckPlayerBlackJacks()
+{
+	m_p1.Blackjack();
+	m_p2.Blackjack();
+}
+
 void Table::SetDealerCard(Card* c)
 {
 	m_dealerCard = c;

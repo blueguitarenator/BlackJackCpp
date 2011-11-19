@@ -23,8 +23,10 @@ public:
 	void SetDealerCard(Card* c);
 	Card* GetDealerCard();
 	void Reset();
+	void CheckPlayerBlackJacks();
 	inline int GetP1Wager(){return m_p1Wager;}
 	inline int GetP2Wager(){return m_p2Wager;}
+
 private:
 	IPlayer& m_p1;
 	IPlayer& m_p2;

@@ -129,10 +129,25 @@ TEST(PlayerTest, PlayerGetsSplitsBet)
 	testFriend.AddCard(new Card(10, Card::HEART), p);
 	testFriend.AddCard(new Card(14, Card::HEART), p);
 	IPlayer* split = p.Split();
-	split->Ante();
 	p.Wins();
 	split->Wins();
 	p.TakeSplitsBank();
 
 	EXPECT_EQ(20, p.GetBank());
+}
+
+TEST(PlayerTest, PlayerLosesWhenSplitsLoses)
+{
+	using ::testing::_;
+	using ::testing::Return;
+	MockStrategy s;
+	Player p(s, "Mock");
+	PlayerTestFriend testFriend;
+	p.Ante();
+	testFriend.AddCard(new Card(10, Card::HEART), p);
+	testFriend.AddCard(new Card(14, Card::HEART), p);
+	IPlayer* split = p.Split();
+	p.TakeSplitsBank();
+	EXPECT_EQ(-10, split->GetBank());
+	EXPECT_EQ(-20, p.GetBank());
 }

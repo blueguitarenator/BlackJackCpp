@@ -37,9 +37,16 @@ void Game::Play(int rounds)
 
 			continue;
 		}
+		m_table.CheckPlayerBlackJacks();
 		PrintTable();
-		m_dealer.DealHits(m_table.P1());
-		m_dealer.DealHits(m_table.P2());
+		if (m_table.P1()->In())
+		{
+			m_dealer.DealHits(m_table.P1());
+		}
+		if (m_table.P2()->In())
+		{
+			m_dealer.DealHits(m_table.P2());
+		}
 
 		cout << "After Hits" << endl;
 		PrintTable();

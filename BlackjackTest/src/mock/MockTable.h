@@ -21,6 +21,7 @@ public:
 	  MOCK_METHOD0(Reset, void());
 	  MOCK_METHOD0(GetP1Wager, int());
 	  MOCK_METHOD0(GetP2Wager, int());
+	  MOCK_METHOD0(CheckPlayerBlackJacks, void());
 };
 
 #endif /* MOCKTABLE_H_ */

@@ -16,22 +16,21 @@
 <extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 <extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 </extensions>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-<configuration artifactExtension="dylib" artifactName="Blackjack" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.sharedLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.sharedLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.macosx.so.debug.1286532576" name="Debug" parent="cdt.managedbuild.config.macosx.so.debug">
+<configuration artifactExtension="a" artifactName="Blackjack" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.staticLib" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.staticLib" cleanCommand="rm -rf" description="" id="cdt.managedbuild.config.macosx.so.debug.1286532576" name="Debug" parent="cdt.managedbuild.config.macosx.so.debug">
 <folderInfo id="cdt.managedbuild.config.macosx.so.debug.1286532576." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.macosx.so.debug.698351393" name="MacOSX GCC" superClass="cdt.managedbuild.toolchain.gnu.macosx.so.debug">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.macosx.so.debug.371031889" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.macosx.so.debug"/>
 <builder buildPath="${workspace_loc:/Blackjack/Debug}" id="cdt.managedbuild.target.gnu.builder.macosx.so.debug.1533252388" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.macosx.so.debug"/>
 <tool id="cdt.managedbuild.tool.macosx.c.linker.macosx.so.debug.1302872072" name="MacOS X C Linker" superClass="cdt.managedbuild.tool.macosx.c.linker.macosx.so.debug">
-<option defaultValue="true" id="macosx.c.link.macosx.so.debug.option.nostart.2143148027" name="Do not use standard start files (-nostartfiles)" superClass="macosx.c.link.macosx.so.debug.option.nostart" valueType="boolean"/>
-<option defaultValue="true" id="macosx.c.link.macosx.so.debug.option.nodeflibs.438068755" name="Do not use default libraries (-nodefaultlibs)" superClass="macosx.c.link.macosx.so.debug.option.nodeflibs" valueType="boolean"/>
-<option defaultValue="true" id="macosx.c.link.macosx.so.debug.option.shared.1067441096" name="Shared (-dynamiclib)" superClass="macosx.c.link.macosx.so.debug.option.shared" valueType="boolean"/>
+<option id="macosx.c.link.macosx.so.debug.option.nostart.2143148027" name="Do not use standard start files (-nostartfiles)" superClass="macosx.c.link.macosx.so.debug.option.nostart"/>
+<option id="macosx.c.link.macosx.so.debug.option.nodeflibs.438068755" name="Do not use default libraries (-nodefaultlibs)" superClass="macosx.c.link.macosx.so.debug.option.nodeflibs"/>
+<option id="macosx.c.link.macosx.so.debug.option.shared.1067441096" name="Shared (-dynamiclib)" superClass="macosx.c.link.macosx.so.debug.option.shared"/>
 </tool>
 <tool id="cdt.managedbuild.tool.macosx.cpp.linker.macosx.so.debug.189826653" name="MacOS X C++ Linker" superClass="cdt.managedbuild.tool.macosx.cpp.linker.macosx.so.debug">
-<option defaultValue="true" id="macosx.cpp.link.macosx.so.debug.option.shared.941175431" name="Shared (-dynamiclib)" superClass="macosx.cpp.link.macosx.so.debug.option.shared" valueType="boolean"/>
+<option id="macosx.cpp.link.macosx.so.debug.option.shared.941175431" name="Shared (-dynamiclib)" superClass="macosx.cpp.link.macosx.so.debug.option.shared"/>
 <inputType id="cdt.managedbuild.tool.macosx.cpp.linker.input.2094161303" superClass="cdt.managedbuild.tool.macosx.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -59,6 +58,10 @@
 </sourceEntries>
 </configuration>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -199,7 +202,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="specsFile">
-<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp" command="g++" useDefault="true"/>
+<runAction arguments="-g -E -P -v -dD ${plugin_state_location}/specs.cpp" command="g++" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
@@ -518,7 +521,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="specsFile">
-<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.c" command="gcc" useDefault="true"/>
+<runAction arguments="-g -E -P -v -dD ${plugin_state_location}/specs.c" command="gcc" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
@@ -574,7 +577,6 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 </cconfiguration>
 <cconfiguration id="cdt.managedbuild.config.macosx.so.release.65575618">
 <storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.config.macosx.so.release.65575618" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -632,6 +634,10 @@
 </sourceEntries>
 </configuration>
 </storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 <storageModule moduleId="scannerConfiguration">
 <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
 <profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -772,7 +778,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="specsFile">
-<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp" command="g++" useDefault="true"/>
+<runAction arguments="-g -E -P -v -dD ${plugin_state_location}/specs.cpp" command="g++" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
@@ -1091,7 +1097,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="specsFile">
-<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.c" command="gcc" useDefault="true"/>
+<runAction arguments="-g -E -P -v -dD ${plugin_state_location}/specs.c" command="gcc" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
@@ -1147,7 +1153,6 @@
 </profile>
 </scannerConfigBuildInfo>
 </storageModule>
-<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 </cconfiguration>
 </storageModule>
 <storageModule moduleId="cdtBuildSystem" version="4.0.0">

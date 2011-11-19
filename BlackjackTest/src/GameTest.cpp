@@ -61,7 +61,7 @@ TEST(GameFixture, OneRoundDealerBusts)
 	std::vector<IPlayer*> splits;
 	EXPECT_CALL(mock_table, Reset()).Times(1);
 	EXPECT_CALL(mock_dealer, Deal()).Times(1);
-	EXPECT_CALL(mock_dealer, DealHits(_)).Times(2);
+	EXPECT_CALL(mock_dealer, DealHits(_)).Times(0);
 	EXPECT_CALL(mock_dealer, GetValue())
 		.Times(2)
 		.WillRepeatedly(Return(22));

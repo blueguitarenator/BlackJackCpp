@@ -27,6 +27,7 @@ public:
   MOCK_METHOD0(GetBank, int());
   MOCK_METHOD0(GetValue, int());
   MOCK_METHOD0(GetSplits, std::vector<IPlayer*>*());
-  MOCK_METHOD0(TakeSplitsBank, int());
+  MOCK_METHOD0(TakeSplitsBank, void());
+  MOCK_METHOD0(In, bool());
 };
 #endif /* MOCKPLAYER_H_ */
