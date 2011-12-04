@@ -33,6 +33,7 @@ private:
 
 	bool CheckBlackjack();
 	int Count();
+	bool IsSoft17();
 
 };
 

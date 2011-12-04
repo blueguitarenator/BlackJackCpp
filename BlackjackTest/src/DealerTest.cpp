@@ -262,3 +262,21 @@ TEST_F(DealerFixture, DealerWhenPlaySplitsTwice)
 	Dealer dealer(deck, table);
 	dealer.DealHits(&player);
 }
+
+TEST_F(DealerFixture, DealerHitsSoft17)
+{
+	using ::testing::_;
+	using ::testing::Return;
+	DealerTestFriend f;
+
+	EXPECT_CALL(deck, Shuffle()).Times(1);
+	Dealer dealer(deck, table);
+	f.AddCard(new Card(14, Card::HEART), dealer);
+	f.AddCard(new Card(6, Card::HEART), dealer);
+	EXPECT_CALL(deck, Next())
+		.Times(1)
+		.WillOnce(Return(sixDiamonds));
+
+	EXPECT_EQ(23, dealer.FinishUp());
+
+}

@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Card.h"
 
+
 Table::Table(IPlayer& p1, IPlayer& p2)
 :m_p1(p1),
  m_p2(p2)
@@ -17,6 +18,24 @@ Table::Table(IPlayer& p1, IPlayer& p2)
 }
 
 Table::~Table(){}
+
+void Table::Print()
+{
+	using namespace std;
+	m_p1.ShowCards();
+	cout << " " << endl;
+	m_p2.ShowCards();
+	cout << " " << endl;
+	if (m_dealerCard != NULL)
+	{
+		cout << "UpCard: " << m_dealerCard->Value() << "-" << m_dealerCard->SuitString() << endl;
+	}
+	else
+	{
+		cout << " " << endl;
+	}
+
+}
 
 IPlayer* Table::P1()
 {
@@ -48,4 +67,5 @@ void Table::Reset()
 {
 	m_p1Wager = m_p1.Ante();
 	m_p2Wager = m_p2.Ante();
+	m_dealerCard = NULL;
 }

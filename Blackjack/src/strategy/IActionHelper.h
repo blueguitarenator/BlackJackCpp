@@ -18,12 +18,12 @@ class IActionHelper {
 public:
 	virtual ~IActionHelper(){};
 
-	virtual IStrategy::Action DoPair(std::vector<Card*>& playerCards, Card* dealerFaceCard) = 0;
-	virtual IStrategy::Action DoSoft(std::vector<Card*>& playerCards, Card* dealerFaceCard) = 0;
-	virtual IStrategy::Action DoHard(std::vector<Card*>& playerCards, Card* dealerFaceCard) = 0;
-	virtual std::string GetHardKey(int val) = 0;
-	virtual std::string GetSoftKey(int val) = 0;
-	virtual std::string GetPairKey(int val) = 0;
+	virtual IStrategy::Action DoPair(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const = 0;
+	virtual IStrategy::Action DoSoft(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const = 0;
+	virtual IStrategy::Action DoHard(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const = 0;
+	virtual std::string GetHardKey(int val) const = 0;
+	virtual std::string GetSoftKey(int val) const = 0;
+	virtual std::string GetPairKey(int val) const = 0;
 
 };
 

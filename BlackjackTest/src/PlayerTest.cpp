@@ -151,3 +151,37 @@ TEST(PlayerTest, PlayerLosesWhenSplitsLoses)
 	EXPECT_EQ(-10, split->GetBank());
 	EXPECT_EQ(-20, p.GetBank());
 }
+
+TEST(PlayerTest, PlayerBust)
+{
+	MockStrategy s;
+	Player p(s, "Mock");
+	PlayerTestFriend testFriend;
+	p.Ante();
+	testFriend.AddCard(new Card(10, Card::HEART), p);
+	testFriend.AddCard(new Card(5, Card::HEART), p);
+	testFriend.AddCard(new Card(8, Card::HEART), p);
+	IStrategy::Action action = p.Decision(new Card(5, Card::HEART));
+	EXPECT_EQ(-10, p.GetBank());
+	EXPECT_FALSE(p.In());
+	EXPECT_EQ(IStrategy::BUST, action);
+}
+
+TEST(PlayerTest, PlayerGetValue)
+{
+	MockStrategy s;
+	Player p(s, "Mock");
+	PlayerTestFriend testFriend;
+	testFriend.AddCard(new Card(14, Card::HEART), p);
+	testFriend.AddCard(new Card(14, Card::HEART), p);
+
+	EXPECT_EQ(12, p.GetValue());
+	testFriend.AddCard(new Card(2, Card::HEART), p);
+	EXPECT_EQ(14, p.GetValue());
+	testFriend.AddCard(new Card(14, Card::HEART), p);
+	EXPECT_EQ(15, p.GetValue());
+	testFriend.AddCard(new Card(7, Card::HEART), p);
+	EXPECT_EQ(12, p.GetValue());
+
+
+}

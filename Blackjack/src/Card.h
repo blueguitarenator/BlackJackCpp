@@ -24,9 +24,10 @@ public:
 	Card(int value, SuitEnum suit);
 	virtual ~Card();
 
-	int Value();
+	int Value() const;
 	SuitEnum Suit(){return m_suit;}
 	std::string SuitString();
+	bool IsAce(){ return m_value == 14;}
 private:
 	int m_value;
 	SuitEnum m_suit;

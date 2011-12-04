@@ -27,18 +27,19 @@ void Game::Play(int rounds)
 	{
 		cout << "++++++++ROUND++++++++++: " << i << endl;
 		m_table.Reset();
+
+		m_table.Print();
+
 		bool dealerBlackjack = m_dealer.Deal();
 		if (dealerBlackjack)
 		{
-			cout << "==== DEALER BLACKJACK ==== " << endl;
 			PrintTable();
-//			cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
-//			cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
-
+			cout << "==== DEALER BLACKJACK ==== " << endl;
 			continue;
 		}
+		m_table.Print();
 		m_table.CheckPlayerBlackJacks();
-		PrintTable();
+		cout << "Do Hits" << endl;
 		if (m_table.P1()->In())
 		{
 			m_dealer.DealHits(m_table.P1());
@@ -48,12 +49,14 @@ void Game::Play(int rounds)
 			m_dealer.DealHits(m_table.P2());
 		}
 
-		cout << "After Hits" << endl;
-		PrintTable();
-		cout << "Dealer Value: (" << m_dealer.FinishUp() << ")" << endl;
-		Settle();
-		cout << "P1 Bank $" << m_table.P1()->GetBank() << endl;
-		cout << "P2 Bank $" << m_table.P2()->GetBank() << endl;
+		m_table.Print();
+		if (m_table.P1()->In() || m_table.P2()->In())
+		{
+			cout << "Dealer Value: (" << m_dealer.FinishUp() << ")" << endl;
+			Settle();
+		}
+		m_table.SetDealerCard(NULL);
+		m_table.Print();
 	}
 
 }
@@ -76,6 +79,10 @@ void Game::DoSettle(IPlayer* p)
 		{
 			p->Push();
 		}
+		else
+		{
+			p->Lose();
+		}
 	}
 }
 
@@ -84,56 +91,53 @@ void Game::Settle()
 	IPlayer* p1 = m_table.P1();
 	IPlayer* p2 = m_table.P2();
 	std::vector<IPlayer*>::iterator iter;
-	DoSettle(p1);
-	std::vector<IPlayer*>* splits = p1->GetSplits();
-	for (iter = splits->begin(); iter != splits->end(); ++iter)
+	if (p1->In())
 	{
-		IPlayer* split = *iter;
-		DoSettle(split);
+		DoSettle(p1);
+		std::vector<IPlayer*>* splits = p1->GetSplits();
+		for (iter = splits->begin(); iter != splits->end(); ++iter)
+		{
+			IPlayer* split = *iter;
+			DoSettle(split);
+		}
+		p1->TakeSplitsBank();
 	}
-	p1->TakeSplitsBank();
-
-	DoSettle(p2);
-	splits = p2->GetSplits();
-	for (iter = splits->begin(); iter != splits->end(); ++iter)
+	if (p2->In())
 	{
-		IPlayer* split = *iter;
-		DoSettle(split);
+		DoSettle(p2);
+		std::vector<IPlayer*>* splits = p2->GetSplits();
+		for (iter = splits->begin(); iter != splits->end(); ++iter)
+		{
+			IPlayer* split = *iter;
+			DoSettle(split);
+		}
+		p1->TakeSplitsBank();
 	}
-	p1->TakeSplitsBank();
 }
-
-//void Game::PrintDecisions(IStrategy::Action a1, IStrategy::Action a2)
-//{
-//	cout << "P1 action: " << a1 << " " << GetActionString(a1) << endl;
-//	cout << "P2 action: " << a2 << " " << GetActionString(a2) << endl;
-//}
 
 void Game::PrintTable()
 {
-//	cout << "P1(" << m_table.P1()->GetValue() << ") :";
 	m_table.P1()->ShowCards();
 	cout << " " << endl;
-//	cout << "P2(" << m_table.P2()->GetValue() << ") :";
 	m_table.P2()->ShowCards();
 	cout << " " << endl;
 	cout << "UpCard: " << m_table.GetDealerCard()->Value() << "-" << m_table.GetDealerCard()->SuitString() << endl;
 }
 
-//string Game::GetActionString(IStrategy::Action a)
-//{
-//	switch(a)
-//	{
-//	case IStrategy::STAY:
-//		return "Stay";
-//	case IStrategy::HIT:
-//		return "Hit";
-//	case IStrategy::SPLIT:
-//		return "Split";
-//	case IStrategy::DOUBLE:
-//		return "Double";
-//	case IStrategy::BUST:
-//		return "Bust";
-//	}
-//	return "UNK";
-//}
+string Game::GetActionString(IStrategy::Action a)
+{
+	switch(a)
+	{
+	case IStrategy::STAY:
+		return "Stay";
+	case IStrategy::HIT:
+		return "Hit";
+	case IStrategy::SPLIT:
+		return "Split";
+	case IStrategy::DOUBLE:
+		return "Double";
+	case IStrategy::BUST:
+		return "Bust";
+	}
+	return "UNK";
+}

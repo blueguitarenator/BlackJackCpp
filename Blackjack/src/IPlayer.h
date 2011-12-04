@@ -29,6 +29,7 @@ public:
 	virtual std::vector<IPlayer*>* GetSplits() = 0;
 	virtual void TakeSplitsBank() = 0;
 	virtual bool In() = 0;
+	virtual void Lose() = 0;
 };
 
 #endif /* IPLAYER_H_ */

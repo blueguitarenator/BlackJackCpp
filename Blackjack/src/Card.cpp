@@ -15,7 +15,7 @@ Card::Card(int value, SuitEnum suit) :
 Card::~Card() {
 }
 
-int Card::Value()
+int Card::Value() const
 {
 	if (m_value < 11)
 	{

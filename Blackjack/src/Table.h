@@ -24,6 +24,9 @@ public:
 	Card* GetDealerCard();
 	void Reset();
 	void CheckPlayerBlackJacks();
+
+	void Print();
+
 	inline int GetP1Wager(){return m_p1Wager;}
 	inline int GetP2Wager(){return m_p2Wager;}
 

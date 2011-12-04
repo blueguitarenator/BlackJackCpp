@@ -28,7 +28,10 @@ Player::~Player() {
 
 void Player::Push()
 {
+	cout << m_name << " PUSH " << endl;
 	m_bank += m_bet;
+	m_bet = 0;
+	m_cards.clear();
 }
 
 bool Player::Blackjack()
@@ -54,6 +57,8 @@ void Player::Wins()
 {
 	cout << m_name << " WINS " << endl;
 	m_bank += m_bet * 2;
+	m_bet = 0;
+	m_cards.clear();
 }
 
 void Player::TakeSplitsBank()
@@ -63,7 +68,7 @@ void Player::TakeSplitsBank()
 	{
 		IPlayer* split = *iter;
 		int val = split->GetBank();
-		cout << "Taking splits: " << val << endl;
+//		cout << "Taking splits: " << val << endl;
 		m_bank += val;
 	}
 }
@@ -77,17 +82,26 @@ int Player::Ante()
 	return BET;
 }
 
+void Player::Lose()
+{
+	cout << m_name << " LOSER" << endl;
+	m_cards.clear();
+	m_bet = 0;
+}
+
 IStrategy::Action Player::Decision(Card* dealerFace)
 {
 	if (GetValue() > 21)
 	{
-		cout << m_name << " BUST  " << endl;
+		cout << m_name << " BUST" << endl;
+		m_cards.clear();
 		m_bet = 0;
+		return IStrategy::BUST;
 	}
 	IStrategy::Action action = m_strategy.Execute(m_cards, dealerFace);
 	if (action == IStrategy::DOUBLE)
 	{
-		cout << m_name << " DOUBLE DOWN " << endl;
+		cout << m_name << " DBL DOWN " << endl;
 		m_bank -= BET;
 		m_bet += BET;
 	}
@@ -106,7 +120,7 @@ int Player::Count()
 
 IPlayer* Player::Split()
 {
-	IPlayer* split = new Player(m_strategy, m_name + " split");
+	IPlayer* split = new Player(m_strategy, " " + m_name + ".split");
 	m_splits.push_back(split);
 	Card* c = m_cards[1];
 	split->Ante();
@@ -123,18 +137,31 @@ std::vector<IPlayer*>* Player::GetSplits()
 int Player::GetValue()
 {
 	int val = 0;
+	int aceCount = 0;
 	vector<Card*>::const_iterator iter;
 	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
 	{
 		Card* c = *iter;
 		val += c->Value();
+		if (c->Value() == 11)
+		{
+			aceCount++;
+		}
+	}
+	if (val > 21 && aceCount > 0)
+	{
+		while (aceCount > 0 && val > 21)
+		{
+			val -= 10;
+			aceCount--;
+		}
 	}
 	return val;
 }
 
 void Player::ShowCards()
 {
-	cout << m_name << "(" << GetValue() << ")" << setw(10) << "$" << m_bank << setw(10);
+	cout << m_name << "(" << GetValue() << ")" << setw(10) << "bank$" << m_bank << setw(10) << "bet$" << m_bet << setw(10);
 	vector<Card*>::iterator iter;
 	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
 	{

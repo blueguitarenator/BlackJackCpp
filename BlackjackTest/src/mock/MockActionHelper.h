@@ -14,12 +14,12 @@
 
 class MockActionHelper: public IActionHelper {
 public:
-	  MOCK_METHOD2(DoPair, IStrategy::Action(std::vector<Card*>& playerCards, Card* dealerFaceCard));
-	  MOCK_METHOD2(DoSoft, IStrategy::Action(std::vector<Card*>& playerCards, Card* dealerFaceCard));
-	  MOCK_METHOD2(DoHard, IStrategy::Action(std::vector<Card*>& playerCards, Card* dealerFaceCard));
-	  MOCK_METHOD1(GetHardKey, std::string(int val));
-	  MOCK_METHOD1(GetSoftKey, std::string(int val));
-	  MOCK_METHOD1(GetPairKey, std::string(int val));
+	  MOCK_CONST_METHOD2(DoPair, IStrategy::Action(const std::vector<Card*>& playerCards, const Card* dealerFaceCard));
+	  MOCK_CONST_METHOD2(DoSoft, IStrategy::Action(const std::vector<Card*>& playerCards, const Card* dealerFaceCard));
+	  MOCK_CONST_METHOD2(DoHard, IStrategy::Action(const std::vector<Card*>& playerCards, const Card* dealerFaceCard));
+	  MOCK_CONST_METHOD1(GetHardKey, std::string(int val));
+	  MOCK_CONST_METHOD1(GetSoftKey, std::string(int val));
+	  MOCK_CONST_METHOD1(GetPairKey, std::string(int val));
 };
 
 #endif /* MOCKACTIONHELPER_H_ */

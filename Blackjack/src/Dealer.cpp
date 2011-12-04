@@ -11,6 +11,7 @@
 #include "IPlayer.h"
 #include <iostream>
 #include "Card.h"
+#include <vector>
 
 Dealer::Dealer(IDeck& deck, ITable& t)
 :m_table(t),
@@ -83,13 +84,32 @@ int Dealer::Count()
 int Dealer::FinishUp()
 {
 	int sum = m_cards[0]->Value() + m_cards[1]->Value();
-	while (sum < 17)
+
+	while (sum < 17 || IsSoft17())
 	{
 		Card* c = m_deck.Next();
 		sum += c->Value();
 		m_cards.push_back(c);
 	}
 	return sum;
+}
+
+bool Dealer::IsSoft17()
+{
+	using namespace std;
+	bool ace = false;
+	int val = 0;
+	vector<Card*>::const_iterator iter;
+	for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+	{
+		Card* c = *iter;
+		val += c->Value();
+		if (c->IsAce())
+		{
+			ace = true;
+		}
+	}
+	return val == 17 && ace;
 }
 
 int Dealer::GetValue()

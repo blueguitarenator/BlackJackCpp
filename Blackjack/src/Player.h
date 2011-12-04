@@ -35,6 +35,7 @@ public:
 	std::vector<IPlayer*>* GetSplits();
 	void TakeSplitsBank();
 	bool In();
+	void Lose();
 
 	friend class PlayerTestFriend;
 private:

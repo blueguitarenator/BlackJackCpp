@@ -19,7 +19,7 @@ ActionHelper::ActionHelper() {
 ActionHelper::~ActionHelper() {
 }
 
-IStrategy::Action ActionHelper::DoHard(std::vector<Card*>& playerCards, Card* dealerFaceCard)
+IStrategy::Action ActionHelper::DoHard(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const
 {
 	int playerValue = 0;
 	std::vector<Card*>::const_iterator iter;
@@ -37,19 +37,19 @@ IStrategy::Action ActionHelper::DoHard(std::vector<Card*>& playerCards, Card* de
 	return x.find(dealerFaceCard->Value())->second;
 }
 
-IStrategy::Action ActionHelper::DoPair(std::vector<Card*>& playerCards, Card* dealerFaceCard)
+IStrategy::Action ActionHelper::DoPair(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const
 {
 	std::map<int, IStrategy::Action> x = m_pairTotals.find(GetPairKey(playerCards[0]->Value()))->second;
 	return x.find(dealerFaceCard->Value())->second;
 }
 
-IStrategy::Action ActionHelper::DoSoft(std::vector<Card*>& playerCards, Card* dealerFaceCard)
+IStrategy::Action ActionHelper::DoSoft(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const
 {
 	std::map<int, IStrategy::Action> x = m_softTotals.find(GetSoftKey(playerCards[0]->Value() + playerCards[1]->Value()))->second;
 	return x.find(dealerFaceCard->Value())->second;
 }
 
-std::string ActionHelper::GetHardKey(int val)
+std::string ActionHelper::GetHardKey(int val) const
 {
 	std::string keyValue = "UNK";
 	if (val > 4 && val < 9)
@@ -71,7 +71,7 @@ std::string ActionHelper::GetHardKey(int val)
 	return keyValue;
 }
 
-std::string ActionHelper::GetSoftKey(int val)
+std::string ActionHelper::GetSoftKey(int val) const
 {
 	std::string keyValue = "UNK";
 	if (val == 13)
@@ -89,7 +89,7 @@ std::string ActionHelper::GetSoftKey(int val)
 	return keyValue;
 }
 
-std::string ActionHelper::GetPairKey(int val)
+std::string ActionHelper::GetPairKey(int val) const
 {
 	std::string keyValue = "UNK";
 	if (val == 11 || val == 8)

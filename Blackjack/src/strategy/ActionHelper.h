@@ -16,12 +16,12 @@ public:
 	ActionHelper();
 	virtual ~ActionHelper();
 
-	virtual IStrategy::Action DoPair(std::vector<Card*>& playerCards, Card* dealerFaceCard);
-	virtual IStrategy::Action DoSoft(std::vector<Card*>& playerCards, Card* dealerFaceCard);
-	virtual IStrategy::Action DoHard(std::vector<Card*>& playerCards, Card* dealerFaceCard);
-	virtual std::string GetHardKey(int val);
-	virtual std::string GetSoftKey(int val);
-	virtual std::string GetPairKey(int val);
+	virtual IStrategy::Action DoPair(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const;
+	virtual IStrategy::Action DoSoft(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const;
+	virtual IStrategy::Action DoHard(const std::vector<Card*>& playerCards, const Card* dealerFaceCard) const;
+	virtual std::string GetHardKey(int val) const;
+	virtual std::string GetSoftKey(int val) const;
+	virtual std::string GetPairKey(int val) const;
 
 private:
 	void LoadMaps();
